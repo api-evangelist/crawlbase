@@ -1,0 +1,262 @@
+{
+  "info": {
+    "name": "Crawlbase API",
+    "description": "Crawlbase (formerly ProxyCrawl) web crawling and scraping platform. All products share the host https://api.crawlbase.com and authenticate with a `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering. Endpoints and the token auth model are confirmed from Crawlbase docs; response bodies are raw upstream content or scraper-specific JSON.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.crawlbase.com", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "jsToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Crawling API",
+      "item": [
+        {
+          "name": "Crawl a URL (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/?token={{token}}&url=https%3A%2F%2Fexample.com",
+              "host": ["{{baseUrl}}"],
+              "path": [""],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "url", "value": "https%3A%2F%2Fexample.com" }
+              ]
+            },
+            "description": "Fetch a URL through the proxy network and return raw HTML. Use the Normal token for static pages."
+          }
+        },
+        {
+          "name": "Crawl a URL (JavaScript rendered, JSON)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/?token={{jsToken}}&url=https%3A%2F%2Fexample.com&format=json&page_wait=2000",
+              "host": ["{{baseUrl}}"],
+              "path": [""],
+              "query": [
+                { "key": "token", "value": "{{jsToken}}" },
+                { "key": "url", "value": "https%3A%2F%2Fexample.com" },
+                { "key": "format", "value": "json" },
+                { "key": "page_wait", "value": "2000" }
+              ]
+            },
+            "description": "Render the page in headless Chrome (JavaScript token) and return a JSON envelope. page_wait waits milliseconds after load."
+          }
+        },
+        {
+          "name": "Crawl a URL with a built-in scraper",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/?token={{token}}&url=https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE&scraper=amazon-product-details",
+              "host": ["{{baseUrl}}"],
+              "path": [""],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "url", "value": "https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE" },
+                { "key": "scraper", "value": "amazon-product-details" }
+              ]
+            },
+            "description": "Apply a named extractor via the Crawling API to return parsed JSON."
+          }
+        },
+        {
+          "name": "Crawl a URL (async with callback)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/?token={{token}}&url=https%3A%2F%2Fexample.com&async=true&callback=https%3A%2F%2Fyour-app.example%2Fhook",
+              "host": ["{{baseUrl}}"],
+              "path": [""],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "url", "value": "https%3A%2F%2Fexample.com" },
+                { "key": "async", "value": "true" },
+                { "key": "callback", "value": "https%3A%2F%2Fyour-app.example%2Fhook" }
+              ]
+            },
+            "description": "Queue the request; Crawlbase returns a request id (rid) immediately and POSTs the result to the callback URL."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scraper API",
+      "item": [
+        {
+          "name": "Scrape a supported site",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/scraper?token={{token}}&url=https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE&scraper=amazon-product-details",
+              "host": ["{{baseUrl}}"],
+              "path": ["scraper"],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "url", "value": "https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE" },
+                { "key": "scraper", "value": "amazon-product-details" }
+              ]
+            },
+            "description": "Legacy structured-data endpoint. Returns parsed JSON for the named scraper. Superseded by the Crawling API &scraper= parameter."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Storage API",
+      "item": [
+        {
+          "name": "Get a stored page by rid",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/storage?token={{token}}&rid=RID_HERE",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage"],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "rid", "value": "RID_HERE" }
+              ]
+            },
+            "description": "Retrieve a previously stored crawl by its request id. Use ?url= instead of ?rid= to get the most recent stored version of a URL."
+          }
+        },
+        {
+          "name": "Delete a stored page",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/storage?token={{token}}&rid=RID_HERE",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage"],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "rid", "value": "RID_HERE" }
+              ]
+            },
+            "description": "Delete a single stored crawl by request id."
+          }
+        },
+        {
+          "name": "Bulk retrieve stored pages",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rids\": [\"rid1\", \"rid2\"]\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/storage/bulk?token={{token}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage", "bulk"],
+              "query": [{ "key": "token", "value": "{{token}}" }]
+            },
+            "description": "Fetch up to 100 stored crawls in one request."
+          }
+        },
+        {
+          "name": "Bulk delete stored pages",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rids\": [\"rid1\", \"rid2\"]\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/storage/bulk_delete?token={{token}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage", "bulk_delete"],
+              "query": [{ "key": "token", "value": "{{token}}" }]
+            },
+            "description": "Delete multiple stored crawls in one request."
+          }
+        },
+        {
+          "name": "List stored request ids",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/storage/rids?token={{token}}&limit=100",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage", "rids"],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "limit", "value": "100" }
+              ]
+            },
+            "description": "List stored request ids with scroll-based pagination."
+          }
+        },
+        {
+          "name": "Total stored count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/storage/total_count?token={{token}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["storage", "total_count"],
+              "query": [{ "key": "token", "value": "{{token}}" }]
+            },
+            "description": "Return the total number of pages currently in Cloud Storage."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Screenshots API",
+      "item": [
+        {
+          "name": "Capture a screenshot",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/screenshots?token={{jsToken}}&url=https%3A%2F%2Fexample.com&mode=fullpage&format=png",
+              "host": ["{{baseUrl}}"],
+              "path": ["screenshots"],
+              "query": [
+                { "key": "token", "value": "{{jsToken}}" },
+                { "key": "url", "value": "https%3A%2F%2Fexample.com" },
+                { "key": "mode", "value": "fullpage" },
+                { "key": "format", "value": "png" }
+              ]
+            },
+            "description": "Render and capture a screenshot in headless Chrome. Requires the JavaScript token. Legacy endpoint (closed to new sign-ups 2024-11-01)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leads API",
+      "item": [
+        {
+          "name": "Discover emails for a domain",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/leads?token={{token}}&domain=slack.com&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["leads"],
+              "query": [
+                { "key": "token", "value": "{{token}}" },
+                { "key": "domain", "value": "slack.com" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Return publicly visible emails for a bare domain, with source URLs. One credit per ten emails. Legacy endpoint (closed to new sign-ups 2024-10-01)."
+          }
+        }
+      ]
+    }
+  ]
+}

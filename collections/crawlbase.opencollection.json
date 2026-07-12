@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crawlbase API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": { "name": "Crawling API", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Crawl a URL (HTML).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/?token=YOUR_TOKEN&url=https%3A%2F%2Fexample.com",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Normal (TCP) token for static content." },
+              { "name": "url", "value": "https%3A%2F%2Fexample.com", "type": "query", "description": "URL-encoded target URL." }
+            ]
+          },
+          "docs": "Fetch a URL through the proxy network and return raw HTML."
+        },
+        {
+          "info": { "name": "Crawl a URL (JavaScript rendered, JSON).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/?token=YOUR_JS_TOKEN&url=https%3A%2F%2Fexample.com&format=json&page_wait=2000",
+            "params": [
+              { "name": "token", "value": "YOUR_JS_TOKEN", "type": "query", "description": "JavaScript token for headless-Chrome rendering." },
+              { "name": "url", "value": "https%3A%2F%2Fexample.com", "type": "query", "description": "URL-encoded target URL." },
+              { "name": "format", "value": "json", "type": "query", "description": "html (default), json, or md." },
+              { "name": "page_wait", "value": "2000", "type": "query", "description": "Milliseconds to wait after load." }
+            ]
+          },
+          "docs": "Render the page in headless Chrome and return a JSON envelope."
+        },
+        {
+          "info": { "name": "Crawl a URL with a built-in scraper.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/?token=YOUR_TOKEN&url=https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE&scraper=amazon-product-details",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "url", "value": "https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE", "type": "query", "description": "URL-encoded target URL." },
+              { "name": "scraper", "value": "amazon-product-details", "type": "query", "description": "Named extractor to apply." }
+            ]
+          },
+          "docs": "Apply a named extractor via the Crawling API to return parsed JSON."
+        },
+        {
+          "info": { "name": "Crawl a URL (async with callback).", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/?token=YOUR_TOKEN&url=https%3A%2F%2Fexample.com&async=true&callback=https%3A%2F%2Fyour-app.example%2Fhook",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "url", "value": "https%3A%2F%2Fexample.com", "type": "query", "description": "URL-encoded target URL." },
+              { "name": "async", "value": "true", "type": "query", "description": "Queue and return a request id immediately." },
+              { "name": "callback", "value": "https%3A%2F%2Fyour-app.example%2Fhook", "type": "query", "description": "Webhook URL for async results." }
+            ]
+          },
+          "docs": "Queue the request; the result is POSTed to the callback URL."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Scraper API", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Scrape a supported site.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/scraper?token=YOUR_TOKEN&url=https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE&scraper=amazon-product-details",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "url", "value": "https%3A%2F%2Fwww.amazon.com%2Fdp%2FB0EXAMPLE", "type": "query", "description": "URL-encoded target URL." },
+              { "name": "scraper", "value": "amazon-product-details", "type": "query", "description": "Name of the scraper to apply." }
+            ]
+          },
+          "docs": "Legacy structured-data endpoint returning parsed JSON. Superseded by the Crawling API &scraper= parameter."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Storage API", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get a stored page by rid.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage?token=YOUR_TOKEN&rid=RID_HERE",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "rid", "value": "RID_HERE", "type": "query", "description": "Request id of a stored crawl (or use url=)." }
+            ]
+          },
+          "docs": "Retrieve a previously stored crawl by request id or by URL (most recent version)."
+        },
+        {
+          "info": { "name": "Delete a stored page.", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.crawlbase.com/storage?token=YOUR_TOKEN&rid=RID_HERE",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "rid", "value": "RID_HERE", "type": "query", "description": "Request id to delete." }
+            ]
+          },
+          "docs": "Delete a single stored crawl by request id."
+        },
+        {
+          "info": { "name": "Bulk retrieve stored pages.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.crawlbase.com/storage/bulk?token=YOUR_TOKEN",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"rids\": [\"rid1\", \"rid2\"]\n}" }
+          },
+          "docs": "Fetch up to 100 stored crawls in one request."
+        },
+        {
+          "info": { "name": "Bulk delete stored pages.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.crawlbase.com/storage/bulk_delete?token=YOUR_TOKEN",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"rids\": [\"rid1\", \"rid2\"]\n}" }
+          },
+          "docs": "Delete multiple stored crawls in one request."
+        },
+        {
+          "info": { "name": "List stored request ids.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage/rids?token=YOUR_TOKEN&limit=100",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "limit", "value": "100", "type": "query", "description": "Max request ids per page (cap 10000)." }
+            ]
+          },
+          "docs": "List stored request ids with scroll-based pagination."
+        },
+        {
+          "info": { "name": "Total stored count.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage/total_count?token=YOUR_TOKEN",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." }
+            ]
+          },
+          "docs": "Return the total number of pages currently in Cloud Storage."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Screenshots API", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Capture a screenshot.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/screenshots?token=YOUR_JS_TOKEN&url=https%3A%2F%2Fexample.com&mode=fullpage&format=png",
+            "params": [
+              { "name": "token", "value": "YOUR_JS_TOKEN", "type": "query", "description": "JavaScript token (rendering in headless Chrome)." },
+              { "name": "url", "value": "https%3A%2F%2Fexample.com", "type": "query", "description": "URL-encoded target URL." },
+              { "name": "mode", "value": "fullpage", "type": "query", "description": "viewport or fullpage." },
+              { "name": "format", "value": "png", "type": "query", "description": "png or jpeg." }
+            ]
+          },
+          "docs": "Render and capture a screenshot. Legacy endpoint (closed to new sign-ups 2024-11-01)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Leads API", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Discover emails for a domain.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/leads?token=YOUR_TOKEN&domain=slack.com&limit=10",
+            "params": [
+              { "name": "token", "value": "YOUR_TOKEN", "type": "query", "description": "Crawlbase token." },
+              { "name": "domain", "value": "slack.com", "type": "query", "description": "Bare domain (no scheme or path)." },
+              { "name": "limit", "value": "10", "type": "query", "description": "Max emails to return (default 10)." }
+            ]
+          },
+          "docs": "Return publicly visible emails for a domain, with source URLs. One credit per ten emails. Legacy endpoint (closed to new sign-ups 2024-10-01)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

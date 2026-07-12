@@ -1,0 +1,172 @@
+aid: crawlbase
+url: https://raw.githubusercontent.com/api-evangelist/crawlbase/refs/heads/main/apis.yml
+name: Crawlbase
+kind: company
+description: Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform
+  that fetches any web page through a large rotating proxy network with optional
+  headless-Chrome JavaScript rendering, returning raw HTML, Markdown, screenshots,
+  or structured JSON. A single token-authenticated REST host (api.crawlbase.com)
+  exposes the Crawling API, a Scraper API of ready-made site extractors, Cloud
+  Storage for crawled pages, a Screenshots API, and a Leads API for domain email
+  discovery.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Web Scraping
+- Web Crawling
+- Web Intelligence
+- Data Extraction
+- Proxy
+- Scraper API
+- Data Collection
+- SERP
+- Web Data
+created: '2026-07-12'
+modified: '2026-07-12'
+specificationVersion: '0.19'
+apis:
+- aid: crawlbase:crawlbase-crawling-api
+  name: Crawlbase Crawling API
+  tags:
+  - Web Crawling
+  - Web Scraping
+  - Proxy
+  - JavaScript Rendering
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://crawlbase.com/docs/crawling-api/
+  baseURL: https://api.crawlbase.com
+  properties:
+  - url: https://crawlbase.com/docs/crawling-api/
+    type: Documentation
+  - url: https://crawlbase.com/docs/crawling-api/parameters/
+    type: APIReference
+  - url: openapi/crawlbase-openapi.yml
+    type: OpenAPI
+  - url: collections/crawlbase.postman_collection.json
+    type: PostmanCollection
+  - url: collections/crawlbase.opencollection.json
+    type: OpenCollection
+  description: Fetch any URL through Crawlbase's rotating proxy network and return the
+    page as raw HTML, Markdown, or structured JSON. Supply the target as a URL-encoded
+    `url` query param plus a `token`. Use the Normal (TCP) token for static pages or
+    the JavaScript token to render in headless Chrome, with optional geo-routing,
+    device profiles, waits, clicks, scrolling, and async callbacks.
+- aid: crawlbase:crawlbase-scraper-api
+  name: Crawlbase Scraper API
+  tags:
+  - Data Extraction
+  - Scraper API
+  - Structured Data
+  - SERP
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://crawlbase.com/docs/scraper-api/
+  baseURL: https://api.crawlbase.com/scraper
+  properties:
+  - url: https://crawlbase.com/docs/scraper-api/
+    type: Documentation
+  - url: openapi/crawlbase-openapi.yml
+    type: OpenAPI
+  - url: collections/crawlbase.postman_collection.json
+    type: PostmanCollection
+  - url: collections/crawlbase.opencollection.json
+    type: OpenCollection
+  description: Return ready-parsed JSON for supported sites - Amazon, eBay, Walmart,
+    Google SERP / Shopping / News / Maps / Scholar, LinkedIn, Instagram, TikTok,
+    YouTube, Booking.com, TripAdvisor, Yelp, and more - by naming a `scraper`. Crawlbase
+    documents this as a legacy endpoint and points new users at the Crawling API's
+    `&scraper=` and `&autoparse=true` parameters, which apply the same extractors.
+- aid: crawlbase:crawlbase-storage-api
+  name: Crawlbase Cloud Storage API
+  tags:
+  - Cloud Storage
+  - Web Data
+  - Data Collection
+  - Caching
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://crawlbase.com/docs/storage-api/
+  baseURL: https://api.crawlbase.com/storage
+  properties:
+  - url: https://crawlbase.com/docs/storage-api/
+    type: Documentation
+  - url: openapi/crawlbase-openapi.yml
+    type: OpenAPI
+  - url: collections/crawlbase.postman_collection.json
+    type: PostmanCollection
+  - url: collections/crawlbase.opencollection.json
+    type: OpenCollection
+  description: Retrieve, list, and delete pages that Crawlbase persisted when a crawl
+    was sent with `&store=true`. Fetch a stored page by `rid` or `url`, pull up to
+    100 at once via bulk endpoints, page through all request IDs, and read the total
+    stored count. Pages are retained 14 days by default; storage writes and reads are
+    not separately billed.
+- aid: crawlbase:crawlbase-screenshots-api
+  name: Crawlbase Screenshots API
+  tags:
+  - Screenshots
+  - Web Intelligence
+  - JavaScript Rendering
+  - Monitoring
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://crawlbase.com/docs/screenshots-api/
+  baseURL: https://api.crawlbase.com/screenshots
+  properties:
+  - url: https://crawlbase.com/docs/screenshots-api/
+    type: Documentation
+  - url: openapi/crawlbase-openapi.yml
+    type: OpenAPI
+  - url: collections/crawlbase.postman_collection.json
+    type: PostmanCollection
+  - url: collections/crawlbase.opencollection.json
+    type: OpenCollection
+  description: Capture a rendered screenshot of any URL in headless Chrome, as PNG or
+    JPEG, in viewport or full-page mode, with configurable width, height, and device
+    profile. Requires the JavaScript token. Crawlbase documents this as a legacy
+    endpoint (closed to new sign-ups on 2024-11-01); the Crawling API's `&screenshot=true`
+    covers the same capability for new projects.
+- aid: crawlbase:crawlbase-leads-api
+  name: Crawlbase Leads API
+  tags:
+  - Leads
+  - Data Extraction
+  - Email Discovery
+  - Data Collection
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://crawlbase.com/docs/leads-api/
+  baseURL: https://api.crawlbase.com/leads
+  properties:
+  - url: https://crawlbase.com/docs/leads-api/
+    type: Documentation
+  - url: openapi/crawlbase-openapi.yml
+    type: OpenAPI
+  - url: collections/crawlbase.postman_collection.json
+    type: PostmanCollection
+  - url: collections/crawlbase.opencollection.json
+    type: OpenCollection
+  description: Given a bare `domain`, return publicly visible email addresses
+    associated with it, along with the source URLs where each was found, for lead
+    generation and contact research. Billed at one credit per ten emails. Crawlbase
+    documents this endpoint as closed to new sign-ups (since 2024-10-01) and suggests
+    the email-extractor scraper as the alternative for new projects.
+common:
+- type: DomainSecurity
+  url: security/crawlbase-domain-security.yml
+- type: Authentication
+  url: authentication/crawlbase-authentication.yml
+- type: GitHubOrganization
+  url: https://github.com/crawlbase
+- type: LinkedIn
+  url: https://www.linkedin.com/company/crawlbase
+- type: Website
+  url: https://crawlbase.com/
+- type: Documentation
+  url: https://crawlbase.com/docs
+- type: Plans
+  url: plans/crawlbase-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/crawlbase-rate-limits.yml
+- type: FinOps
+  url: finops/crawlbase-finops.yml
+- url: https://crawlbase.com/blog
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,29 @@
+generated: '2026-07-12'
+method: documented
+source: https://crawlbase.com/docs/crawling-api/
+summary:
+  types:
+  - apiKey
+schemes:
+- name: tokenAuth
+  type: apiKey
+  in: query
+  parameterName: token
+  description: >-
+    Crawlbase authenticates every request with a `token` query parameter (for
+    example `?token=YOUR_TOKEN`), not an Authorization header. Each account is
+    issued two tokens: a Normal (TCP) token for static HTML/JSON responses, and
+    a JavaScript token that renders the target in headless Chrome. The Scraper
+    and Screenshots APIs require the JavaScript token when rendering is involved.
+    The same token model applies across the Crawling, Scraper, Storage,
+    Screenshots, and Leads products. Crawlbase also supports a proxy interface
+    (smartproxy.crawlbase.com) where the token is supplied as the proxy username.
+  tokenTypes:
+  - name: Normal (TCP) token
+    use: Static HTML/JSON pages; faster and cheaper.
+  - name: JavaScript token
+    use: SPAs, client-side rendering, lazy-loaded content, screenshots; renders in headless Chrome.
+  sources:
+  - https://crawlbase.com/docs/crawling-api/
+  - https://crawlbase.com/docs/scraper-api/
+  - https://crawlbase.com/docs/screenshots-api/

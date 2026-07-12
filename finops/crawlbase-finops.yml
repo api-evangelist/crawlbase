@@ -1,0 +1,124 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Crawlbase
+providerId: crawlbase
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Web Scraping
+- Web Crawling
+- Proxy
+- Data Extraction
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Crawlbase spend. Crawlbase bills on a per-request / credit
+  usage basis for the Crawling and Scraper APIs, monthly subscription fees for
+  its Smart / AI proxy tiers and Cloud Storage tiers, and custom enterprise
+  agreements. The dominant cost driver is successful crawl requests: only
+  responses with pc_status 200 are charged, and per-request credit cost rises
+  with JavaScript rendering (headless Chrome), premium residential routing, and
+  scroll processing time. The Leads API bills one credit per ten emails per
+  domain. A free trial covers up to 10,000 requests.
+notes: >-
+  Per-request and per-credit dollar rates are shown in Crawlbase's pricing
+  calculator and are not reconciled here. Credit multipliers (JavaScript = 2
+  credits, premium = 10, premium + JS = 20 on the Scraper API; Leads = 1 credit
+  per 10 emails; scroll billed by processing time) are documented in the product
+  references. Verify current rates on https://crawlbase.com/pricing during
+  reconciliation.
+sources:
+- https://crawlbase.com/pricing
+- https://crawlbase.com/docs/crawling-api/
+- https://crawlbase.com/docs/scraper-api/
+- https://crawlbase.com/docs/leads-api/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Crawlbase
+serviceCategory: Web Data and Scraping
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Crawlbase
+  ServiceCategory: Web Data and Scraping
+  ProviderName: Crawlbase
+  PublisherName: Crawlbase
+  InvoiceIssuerName: Crawlbase
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: successful_requests
+  description: Crawling API requests that return pc_status 200, billed per request (complexity-based). Failed requests are free.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - token_type
+  - complexity
+- name: javascript_render_credits
+  description: Extra credits consumed when a request is rendered in headless Chrome (JavaScript token).
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+- name: premium_proxy_credits
+  description: Extra credits consumed when a request routes through the premium residential proxy network.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+- name: scraper_requests
+  description: Scraper API structured-extraction requests, billed per request with credit multipliers for javascript and premium.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - scraper
+- name: leads_credits
+  description: Leads API email discovery, billed at one credit per ten emails returned per domain.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - domain
+- name: storage_subscription
+  description: Monthly Cloud Storage subscription fee by tier (Free / Developer / Business / Enterprise).
+  unit: subscription
+  aggregation: max
+  dimensions:
+  - account
+  - tier
+- name: proxy_subscription
+  description: Monthly Smart / AI proxy subscription fee by tier (Free / Starter / Advanced / Premium).
+  unit: subscription
+  aggregation: max
+  dimensions:
+  - account
+  - tier
+principles:
+- name: Visibility
+  description: Track successful (pc_status 200) request volume by token type and complexity; monitor JavaScript and premium credit multipliers separately from plain fetches.
+- name: Allocation
+  description: Use distinct tokens or sub-accounts per workload/team so crawl spend maps to internal cost centers.
+- name: Optimization
+  description: Prefer the Normal token for static pages; reserve the JavaScript token and premium routing for pages that truly need them; cap scroll_interval; rely on charge-on-success and async batching; cache via Cloud Storage to avoid re-crawling.
+- name: Accountability
+  description: Assign owners per token/project; review monthly successful-request and credit burn against plan allowances and budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

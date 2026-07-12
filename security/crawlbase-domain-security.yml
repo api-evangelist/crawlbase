@@ -1,0 +1,29 @@
+generated: '2026-07-12'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: crawlbase.com
+  https: true
+  tls_version: TLSv1.3
+  cert_not_before: May 29 17:51:33 2026 GMT
+  cert_expires: Aug 27 18:47:34 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: true
+  hsts_preload: true
+  server: cloudflare
+- host: api.crawlbase.com
+  https: true
+  cert_not_before: Jul 3 16:01:34 2026 GMT
+  cert_expires: Oct 1 16:01:33 2026 GMT
+  hsts: false
+  server: PC-WS
+  note: Returns HTTP 400 to an unauthenticated root request, as expected for the token-gated API host.
+domains:
+- domain: crawlbase.com
+  dnssec: false
+  caa: []
+  spf: true
+  spf_record: v=spf1 include:emsd1.com include:spf.zoho.com include:zoho.com include:em8389.crawlbase.com include:zeptomail.net mx -all
+  dmarc: true
+  dmarc_policy: quarantine

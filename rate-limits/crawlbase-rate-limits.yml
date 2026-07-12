@@ -1,0 +1,65 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Crawlbase
+providerId: crawlbase
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Web Scraping
+- Web Crawling
+- Proxy
+- Rate Limiting
+- Quotas
+description: >-
+  Crawlbase governs throughput primarily by concurrent request threads and by
+  your plan's monthly credit / request allowance rather than a single global
+  per-minute cap. The default documented ceiling on the Crawling API is roughly
+  20 requests per second (the same default applies to the proxy interface at
+  smartproxy.crawlbase.com); higher thread counts are unlocked by higher-tier
+  subscriptions. Only requests that return pc_status 200 count against a
+  pay-as-you-go quota - failed requests (timeouts, blocks, target 5xx) are free.
+  Scroll-heavy JavaScript requests are metered by processing time (first 8
+  seconds = 1 request, each additional 5 seconds = 1 more request).
+notes: >-
+  Exact per-plan thread limits and any per-account request-rate caps are shown
+  in the Crawlbase dashboard and pricing page and are not fully reconciled here;
+  verify current limits during reconciliation. The ~20 req/s figure is documented
+  for the default Crawling API / proxy configuration.
+sources:
+- https://crawlbase.com/docs/crawling-api/
+- https://crawlbase.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Crawling API Request Rate
+  scope: account
+  metric: requests
+  limit: ~20 requests/second (default)
+  notes: Documented default ceiling; the proxy interface (smartproxy.crawlbase.com) shares the same default.
+- name: Concurrent Threads
+  scope: account
+  metric: threads
+  limit: per plan
+  notes: Higher subscription tiers unlock more concurrent request threads.
+- name: Monthly Credit / Request Allowance
+  scope: account
+  metric: requests
+  limit: per plan
+  notes: Pay-as-you-go and subscription tiers meter monthly successful requests / credits. Only pc_status 200 responses are charged.
+- name: Scroll Processing Metering
+  scope: request
+  metric: seconds
+  limit: 1 request per first 8s, +1 per additional 5s
+  notes: JavaScript scroll requests are billed by server processing time rather than a flat per-request cost.
+policies:
+- name: Charge on Success Only
+  description: Only requests that return pc_status 200 count against quota; failed requests (timeouts, blocks, target 5xx) are free.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+- name: Async Queueing
+  description: The Crawling API async=true mode queues requests and returns a request id, smoothing bursts and delivering results to a callback webhook.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

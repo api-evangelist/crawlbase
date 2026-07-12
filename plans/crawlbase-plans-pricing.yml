@@ -1,0 +1,236 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Crawlbase
+providerId: crawlbase
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Web Scraping
+- Web Crawling
+- Proxy
+- Data Extraction
+- Plans
+description: >-
+  Crawlbase combines a free trial, pay-as-you-go per-request billing for the
+  Crawling API, monthly subscription tiers for its Smart / AI proxy plans, and
+  separate monthly tiers for Cloud Storage. New accounts get up to 10,000 free
+  requests with no credit card, valid for both regular and JavaScript-rendered
+  requests. Crawling API pay-as-you-go is complexity-based per successful request
+  (only responses with pc_status 200 are charged); JavaScript rendering and
+  premium residential routing cost more credits per request than a plain fetch.
+  Exact per-request dollar amounts are shown in Crawlbase's in-page calculator
+  and are not reconciled here.
+notes: >-
+  Plan names and monthly prices below are captured from the Crawlbase pricing
+  page and may change; verify current tiers, credit allowances, and per-request
+  rates on https://crawlbase.com/pricing during reconciliation. Credit costs
+  (JavaScript = 2 credits, premium = 10 credits, premium + JS = 20 credits on
+  the Scraper API; Leads = 1 credit per 10 emails) are documented in the product
+  references.
+sources:
+- https://crawlbase.com/pricing
+- https://crawlbase.com/docs/crawling-api/
+- https://crawlbase.com/docs/scraper-api/
+- https://crawlbase.com/docs/storage-api/
+- https://crawlbase.com/docs/leads-api/
+plans:
+- id: crawlbase-free-trial
+  name: Free Trial
+  type: free
+  description: >-
+    Up to 10,000 free requests with no credit card, usable for both regular and
+    JavaScript-rendered crawls, to evaluate the Crawling and Scraper APIs.
+  entries:
+  - label: Free Trial Requests
+    name: free_trial_requests
+    type: usage
+    metric: requests
+    limit: 10000
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: free (up to 10,000 requests, no credit card)
+    userMultiplied: false
+  elements:
+  - name: Crawling API Access
+  - name: JavaScript Rendering
+  - name: Scraper API Access
+- id: crawlbase-crawling-payg
+  name: Crawling API - Pay As You Go
+  type: usage
+  description: >-
+    Complexity-based per-request billing for the Crawling API. Only requests that
+    return pc_status 200 are charged; failed requests (timeouts, blocks, target
+    5xx) are free. JavaScript rendering and premium residential routing consume
+    more credits per request.
+  entries:
+  - label: Successful Request
+    name: successful_request
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: complexity-based per successful request (see pricing calculator)
+    userMultiplied: false
+  elements:
+  - name: Rotating Proxy Network
+  - name: JavaScript Rendering (higher credit cost)
+  - name: Premium Residential Routing (higher credit cost)
+  - name: Geo Targeting (45+ countries)
+- id: crawlbase-smartproxy-free
+  name: Smart / AI Proxy - Free
+  type: free
+  description: Entry Smart Proxy tier with a monthly credit allowance for evaluation.
+  entries:
+  - label: Included Credits
+    name: smartproxy_free_credits
+    type: usage
+    metric: credits
+    limit: 5000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0 (5,000 credits/month)
+    userMultiplied: false
+  elements:
+  - name: Rotating Proxies
+  - name: IP Rotation
+- id: crawlbase-smartproxy-starter
+  name: Smart / AI Proxy - Starter
+  type: paid
+  description: Entry paid Smart Proxy subscription with more threads, credits, and unique proxies.
+  entries:
+  - label: Monthly Subscription
+    name: smartproxy_starter
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $149/month (or $1,599/year)
+    userMultiplied: false
+  elements:
+  - name: Higher Thread Count
+  - name: More Monthly Credits
+  - name: Unique Proxies
+- id: crawlbase-smartproxy-advanced
+  name: Smart / AI Proxy - Advanced
+  type: paid
+  description: Mid-tier Smart Proxy subscription.
+  entries:
+  - label: Monthly Subscription
+    name: smartproxy_advanced
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $229/month (or $2,249/year)
+    userMultiplied: false
+  elements:
+  - name: Higher Thread Count
+  - name: More Monthly Credits
+  - name: More Unique Proxies
+- id: crawlbase-smartproxy-premium
+  name: Smart / AI Proxy - Premium
+  type: paid
+  description: >-
+    Top Smart Proxy subscription, including JavaScript rendering and custom
+    geolocation across 45+ countries.
+  entries:
+  - label: Monthly Subscription
+    name: smartproxy_premium
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $449/month (or $4,140/year)
+    userMultiplied: false
+  elements:
+  - name: JavaScript Rendering
+  - name: Custom Geolocation (45+ countries)
+  - name: Highest Thread Count and Credits
+- id: crawlbase-storage-free
+  name: Cloud Storage - Free
+  type: free
+  description: Free Cloud Storage tier for retaining crawled pages.
+  entries:
+  - label: Stored Documents
+    name: storage_free_docs
+    type: usage
+    metric: documents
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0 (10k documents, 14-day retention)
+    userMultiplied: false
+  elements:
+  - name: 14-Day Retention
+- id: crawlbase-storage-developer
+  name: Cloud Storage - Developer
+  type: paid
+  description: Paid Cloud Storage tier with more capacity and longer retention.
+  entries:
+  - label: Monthly Subscription
+    name: storage_developer
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $29/month (100k documents, 30-day retention)
+    userMultiplied: false
+  elements:
+  - name: 100k Documents
+  - name: 30-Day Retention
+- id: crawlbase-storage-business
+  name: Cloud Storage - Business
+  type: paid
+  description: Higher-volume Cloud Storage tier.
+  entries:
+  - label: Monthly Subscription
+    name: storage_business
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $249/month (1M documents, 30-day retention)
+    userMultiplied: false
+  elements:
+  - name: 1M Documents
+  - name: 30-Day Retention
+- id: crawlbase-enterprise
+  name: Enterprise Crawler
+  type: enterprise
+  description: >-
+    Billed per request at Crawling API rates, with custom pricing for volume,
+    SLAs, and dedicated support. Contact Crawlbase.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: SLAs and Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,96 @@
+aid: crawlbase
+name: Crawlbase
+review:
+  question: Does Crawlbase expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Every Crawlbase product (Crawling API,
+    Scraper API, Cloud Storage API, Screenshots API, Leads API) is
+    request/response REST over HTTPS on the single host api.crawlbase.com,
+    authenticated with a `token` query parameter. There is no server-push
+    transport (WebSocket or SSE) on Crawlbase's own API to model. Crawlbase's
+    only asynchronous mode is the Crawling API `async=true` option, which
+    queues a request, returns a request id immediately, and delivers the result
+    by HTTP POST to a client-supplied `callback` webhook URL - server-to-endpoint
+    HTTP, not a WebSocket. WebSocket precision is therefore false.
+findings:
+  summary: |
+    Crawlbase (formerly ProxyCrawl) does not publish a documented public
+    WebSocket API. Crawlbase is a web crawling and scraping platform. All of its
+    products are exposed over REST (HTTPS) on one host, https://api.crawlbase.com,
+    authenticated by a `token` query parameter rather than a header. The Crawling
+    API is the primary surface (GET/POST at the host root); the Scraper, Storage,
+    Screenshots, and Leads products live under path prefixes on the same host.
+    The only asynchronous behavior is the Crawling API `async=true` mode, which
+    returns a request id (rid) and later POSTs the result to a `callback` webhook.
+    No realtime, bidirectional, or streaming WebSocket (ws:// or wss://) endpoint
+    is documented anywhere in Crawlbase's product docs as of the review date.
+  accessModel: |
+    Access is token-based with two tokens per account: a Normal (TCP) token for
+    static HTML/JSON and a JavaScript token for headless-Chrome rendering. New
+    accounts get up to 10,000 free trial requests with no credit card. The
+    Screenshots API and Leads API are documented as legacy and closed to new
+    sign-ups (2024-11-01 and 2024-10-01 respectively); their capabilities are
+    reachable through the Crawling API (screenshot=true) or the Scraper API
+    (email-extractor) for new projects.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.crawlbase.com
+      documented: true
+      note: All products (Crawling, Scraper, Storage, Screenshots, Leads) are REST over HTTPS on this host; auth is a token query param.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Crawling API async=true queues the request and POSTs the result to a client-supplied callback URL. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in any Crawlbase product reference as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.crawlbase.com/
+    - POST   https://api.crawlbase.com/
+    - GET    https://api.crawlbase.com/scraper
+    - GET    https://api.crawlbase.com/storage
+    - DELETE https://api.crawlbase.com/storage
+    - POST   https://api.crawlbase.com/storage/bulk
+    - POST   https://api.crawlbase.com/storage/bulk_delete
+    - GET    https://api.crawlbase.com/storage/rids
+    - GET    https://api.crawlbase.com/storage/total_count
+    - GET    https://api.crawlbase.com/screenshots
+    - GET    https://api.crawlbase.com/leads
+  endpointsModeled:
+    - note: Query parameters on all endpoints (format, country, device, page_wait, ajax_wait, css_click_selector, scroll, screenshot, get_headers, get_cookies, store, async, callback, scraper, autoparse, javascript, premium, mode, width, height, limit, scroll, rid, domain) are modeled from Crawlbase's documented parameter reference. Response bodies are raw upstream content (HTML/Markdown/JSON/image) or scraper-specific JSON whose exact fields vary per scraper, and are modeled loosely rather than enumerated.
+  proxyMode:
+    - note: Crawlbase also offers a proxy interface (smartproxy.crawlbase.com:8000 HTTP / :8001 HTTPS) that passes the token as the proxy username and routes through the same Crawling API plan. This is a proxy transport, not an additional documented REST API, and is not modeled as an endpoint.
+sources:
+  - url: https://crawlbase.com/docs/crawling-api/
+    type: Documentation
+    note: Crawling API base URL https://api.crawlbase.com/, GET/POST/PUT, token query param, Normal vs JavaScript token. No WebSocket mentioned.
+  - url: https://crawlbase.com/docs/crawling-api/parameters/
+    type: APIReference
+    note: Documented query parameters (format, country, device, page_wait, ajax_wait, css_click_selector, scroll, screenshot, get_headers, get_cookies, store, async, callback).
+  - url: https://crawlbase.com/docs/scraper-api/
+    type: Documentation
+    note: Scraper API at /scraper, GET, token+url+scraper. Legacy; superseded by Crawling API &scraper=.
+  - url: https://crawlbase.com/docs/storage-api/
+    type: Documentation
+    note: Cloud Storage API at /storage with /storage/bulk, /storage/bulk_delete, /storage/rids, /storage/total_count. 14-day default retention.
+  - url: https://crawlbase.com/docs/screenshots-api/
+    type: Documentation
+    note: Screenshots API at /screenshots, GET, JavaScript token. Legacy, closed to new sign-ups 2024-11-01.
+  - url: https://crawlbase.com/docs/leads-api/
+    type: Documentation
+    note: Leads API at /leads, GET, token+domain+limit. Legacy, closed to new sign-ups 2024-10-01.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Crawlbase's own public API is
+    request/response REST across all products, authenticated with a token query
+    parameter, with an optional async/callback webhook mode on the Crawling API.
+    No AsyncAPI document was created because there is no server-push transport
+    (WebSocket or SSE) on Crawlbase's own API to model.
