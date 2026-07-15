@@ -147,6 +147,8 @@ apis:
     documents this endpoint as closed to new sign-ups (since 2024-10-01) and suggests
     the email-extractor scraper as the alternative for new projects.
 common:
+- type: AgenticAccess
+  url: agentic-access/crawlbase-agentic-access.yml
 - type: DomainSecurity
   url: security/crawlbase-domain-security.yml
 - type: Authentication
