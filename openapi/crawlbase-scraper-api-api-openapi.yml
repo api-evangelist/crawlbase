@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: Crawlbase Crawling API Scraper API API
+  description: 'Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).
+
+    Grounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase''s public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.'
+  version: '1.0'
+  contact:
+    name: Crawlbase
+    url: https://crawlbase.com
+servers:
+- url: https://api.crawlbase.com
+  description: Crawlbase API host (all products share this host)
+security:
+- tokenAuth: []
+tags:
+- name: Scraper API
+  description: Ready-made structured-data extractors for supported sites (legacy).
+paths:
+  /scraper:
+    get:
+      operationId: scrape
+      tags:
+      - Scraper API
+      summary: Scrape a supported site to structured JSON
+      description: Applies a named `scraper` to the target `url` and returns provider-specific structured JSON (for example, amazon-product-details, google-serp, linkedin-company). Documented by Crawlbase as a legacy endpoint; the Crawling API's `&scraper=` parameter offers the same extractors.
+      parameters:
+      - $ref: '#/components/parameters/Url'
+      - name: scraper
+        in: query
+        required: true
+        description: Name of the scraper/extractor to apply (see the Crawlbase scraper catalog).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Country'
+      - name: javascript
+        in: query
+        required: false
+        description: Render the page in Chrome before scraping (requires the JavaScript token).
+        schema:
+          type: boolean
+      - name: premium
+        in: query
+        required: false
+        description: Route through the premium residential proxy network.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Structured JSON for the scraped page. Fields vary per scraper.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
+    Url:
+      name: url
+      in: query
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: 'Crawlbase authentication token passed as the `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering.'

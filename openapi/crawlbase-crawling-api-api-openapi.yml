@@ -1,0 +1,231 @@
+openapi: 3.0.3
+info:
+  title: Crawlbase Crawling API API
+  description: 'Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).
+
+    Grounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase''s public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.'
+  version: '1.0'
+  contact:
+    name: Crawlbase
+    url: https://crawlbase.com
+servers:
+- url: https://api.crawlbase.com
+  description: Crawlbase API host (all products share this host)
+security:
+- tokenAuth: []
+tags:
+- name: Crawling API
+  description: Fetch any URL through the rotating proxy network, optionally rendered.
+paths:
+  /:
+    get:
+      operationId: crawl
+      tags:
+      - Crawling API
+      summary: Crawl a URL
+      description: 'Fetches the target `url` through Crawlbase''s proxy network and returns the page. Use the Normal (TCP) token for static HTML/JSON, or the JavaScript token to render the page in headless Chrome before returning it. Crawlbase status is surfaced in the `pc_status` response header; requests that do not return `pc_status: 200` are not charged.'
+      parameters:
+      - $ref: '#/components/parameters/Url'
+      - $ref: '#/components/parameters/Format'
+      - $ref: '#/components/parameters/Country'
+      - $ref: '#/components/parameters/Device'
+      - $ref: '#/components/parameters/UserAgent'
+      - $ref: '#/components/parameters/Scraper'
+      - name: autoparse
+        in: query
+        required: false
+        description: Auto-detect the page type and return parsed JSON.
+        schema:
+          type: boolean
+      - name: page_wait
+        in: query
+        required: false
+        description: Milliseconds to wait after page load before capture (JavaScript token only).
+        schema:
+          type: integer
+      - name: ajax_wait
+        in: query
+        required: false
+        description: Wait for AJAX / network idle before capture (JavaScript token only).
+        schema:
+          type: boolean
+      - name: css_click_selector
+        in: query
+        required: false
+        description: CSS selector to click before capture (JavaScript token only).
+        schema:
+          type: string
+      - name: scroll
+        in: query
+        required: false
+        description: Scroll toward the bottom of the page before capture (JavaScript token only).
+        schema:
+          type: boolean
+      - name: scroll_interval
+        in: query
+        required: false
+        description: Maximum seconds to scroll (default 10, max 60).
+        schema:
+          type: integer
+      - name: screenshot
+        in: query
+        required: false
+        description: Capture a JPEG screenshot of the rendered page (JavaScript token only).
+        schema:
+          type: boolean
+      - name: get_headers
+        in: query
+        required: false
+        description: Return the target's response headers alongside the body.
+        schema:
+          type: boolean
+      - name: get_cookies
+        in: query
+        required: false
+        description: Return the target's Set-Cookie values.
+        schema:
+          type: boolean
+      - name: cookies_session
+        in: query
+        required: false
+        description: Sticky session identifier to reuse cookies across requests.
+        schema:
+          type: string
+      - name: store
+        in: query
+        required: false
+        description: Persist the response in Crawlbase Cloud Storage.
+        schema:
+          type: boolean
+      - name: async
+        in: query
+        required: false
+        description: Queue the request and return immediately with a request id (rid).
+        schema:
+          type: boolean
+      - name: callback
+        in: query
+        required: false
+        description: Webhook URL that Crawlbase posts async results to.
+        schema:
+          type: string
+          format: uri
+      responses:
+        '200':
+          description: The crawled page. Body is raw upstream content (HTML, Markdown, JSON, or image) depending on `format`, `scraper`, and `screenshot`. Crawlbase-specific metadata (pc_status, original_status, rid, url) is returned in response headers, or inline when `format=json`.
+          content:
+            text/html:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: crawlPost
+      tags:
+      - Crawling API
+      summary: Crawl a URL (POST)
+      description: Same as the GET crawl operation, but the request payload (for example, POST form data to submit to the target) is sent in the request body. The `token` and `url` remain query parameters.
+      parameters:
+      - $ref: '#/components/parameters/Url'
+      - $ref: '#/components/parameters/Format'
+      - $ref: '#/components/parameters/Country'
+      - $ref: '#/components/parameters/Device'
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The crawled page.
+          content:
+            text/html:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format - html (default), json, or md (Markdown).
+      schema:
+        type: string
+        enum:
+        - html
+        - json
+        - md
+        default: html
+    Url:
+      name: url
+      in: query
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
+      schema:
+        type: string
+    UserAgent:
+      name: user_agent
+      in: query
+      required: false
+      description: Override the User-Agent header sent to the target.
+      schema:
+        type: string
+    Device:
+      name: device
+      in: query
+      required: false
+      description: Device profile - desktop (default), tablet, or mobile.
+      schema:
+        type: string
+        enum:
+        - desktop
+        - tablet
+        - mobile
+        default: desktop
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
+    Scraper:
+      name: scraper
+      in: query
+      required: false
+      description: Name of a built-in extractor to apply to the crawled page (returns parsed JSON).
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: 'Crawlbase authentication token passed as the `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering.'

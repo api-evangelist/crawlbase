@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Crawlbase Crawling API Leads API API
+  description: 'Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).
+
+    Grounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase''s public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.'
+  version: '1.0'
+  contact:
+    name: Crawlbase
+    url: https://crawlbase.com
+servers:
+- url: https://api.crawlbase.com
+  description: Crawlbase API host (all products share this host)
+security:
+- tokenAuth: []
+tags:
+- name: Leads API
+  description: Publicly visible email discovery for a domain (legacy).
+paths:
+  /leads:
+    get:
+      operationId: getLeads
+      tags:
+      - Leads API
+      summary: Discover emails for a domain
+      description: Returns publicly visible email addresses associated with a bare `domain`, with the source URLs where each was found. Billed at one credit per ten emails. Documented by Crawlbase as closed to new sign-ups since 2024-10-01.
+      parameters:
+      - name: domain
+        in: query
+        required: true
+        description: Bare domain (no scheme or path), for example slack.com.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum emails to return (default 10).
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: Discovered emails with source URLs and available metadata.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: 'Crawlbase authentication token passed as the `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering.'

@@ -1,0 +1,125 @@
+openapi: 3.0.3
+info:
+  title: Crawlbase Crawling API Screenshots API API
+  description: 'Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).
+
+    Grounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase''s public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.'
+  version: '1.0'
+  contact:
+    name: Crawlbase
+    url: https://crawlbase.com
+servers:
+- url: https://api.crawlbase.com
+  description: Crawlbase API host (all products share this host)
+security:
+- tokenAuth: []
+tags:
+- name: Screenshots API
+  description: Rendered page screenshots in headless Chrome (legacy).
+paths:
+  /screenshots:
+    get:
+      operationId: screenshot
+      tags:
+      - Screenshots API
+      summary: Capture a screenshot of a URL
+      description: Renders the target `url` in headless Chrome and returns a screenshot. Requires the JavaScript token. Documented by Crawlbase as a legacy endpoint (closed to new sign-ups on 2024-11-01).
+      parameters:
+      - $ref: '#/components/parameters/Url'
+      - name: mode
+        in: query
+        required: false
+        description: viewport (visible area) or fullpage (entire scrollable page).
+        schema:
+          type: string
+          enum:
+          - viewport
+          - fullpage
+          default: viewport
+      - name: format
+        in: query
+        required: false
+        description: Image output format.
+        schema:
+          type: string
+          enum:
+          - png
+          - jpeg
+          default: png
+      - name: width
+        in: query
+        required: false
+        description: Viewport width in pixels.
+        schema:
+          type: integer
+          default: 1280
+      - name: height
+        in: query
+        required: false
+        description: Viewport height in pixels.
+        schema:
+          type: integer
+          default: 800
+      - $ref: '#/components/parameters/Device'
+      - name: store
+        in: query
+        required: false
+        description: Persist the capture in Cloud Storage.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: The rendered screenshot image.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    Device:
+      name: device
+      in: query
+      required: false
+      description: Device profile - desktop (default), tablet, or mobile.
+      schema:
+        type: string
+        enum:
+        - desktop
+        - tablet
+        - mobile
+        default: desktop
+    Url:
+      name: url
+      in: query
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: 'Crawlbase authentication token passed as the `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering.'

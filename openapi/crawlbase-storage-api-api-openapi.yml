@@ -1,0 +1,226 @@
+openapi: 3.0.3
+info:
+  title: Crawlbase Crawling API Storage API API
+  description: 'Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).
+
+    Grounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase''s public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.'
+  version: '1.0'
+  contact:
+    name: Crawlbase
+    url: https://crawlbase.com
+servers:
+- url: https://api.crawlbase.com
+  description: Crawlbase API host (all products share this host)
+security:
+- tokenAuth: []
+tags:
+- name: Storage API
+  description: Retrieve, list, and delete previously stored crawls.
+paths:
+  /storage:
+    get:
+      operationId: getStoredPage
+      tags:
+      - Storage API
+      summary: Retrieve a stored page
+      description: Returns a previously stored crawl by `rid` or by `url`. When queried by `url`, the most recent stored version is returned. Exactly one of `rid` or `url` is required.
+      parameters:
+      - name: rid
+        in: query
+        required: false
+        description: The request id of a stored crawl.
+        schema:
+          type: string
+      - name: url
+        in: query
+        required: false
+        description: The URL-encoded target URL whose most recent stored version to return.
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: The stored page.
+          content:
+            text/html:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteStoredPage
+      tags:
+      - Storage API
+      summary: Delete a stored page
+      description: Deletes a single stored crawl identified by its `rid`.
+      parameters:
+      - name: rid
+        in: query
+        required: true
+        description: The request id of the stored crawl to delete.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /storage/bulk:
+    post:
+      operationId: getStoredPagesBulk
+      tags:
+      - Storage API
+      summary: Bulk retrieve stored pages
+      description: Fetches up to 100 stored crawls in a single request by a list of request ids.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: A batch of stored pages.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /storage/bulk_delete:
+    post:
+      operationId: deleteStoredPagesBulk
+      tags:
+      - Storage API
+      summary: Bulk delete stored pages
+      description: Deletes multiple stored crawls in a single request by a list of request ids.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /storage/rids:
+    get:
+      operationId: listStoredRids
+      tags:
+      - Storage API
+      summary: List stored request ids
+      description: Lists stored request ids with scroll-based pagination.
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        description: Maximum request ids to return per page (cap 10000).
+        schema:
+          type: integer
+      - name: scroll
+        in: query
+        required: false
+        description: Enable scroll pagination; the response returns a scroll_id to continue.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A page of request ids.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /storage/total_count:
+    get:
+      operationId: getStoredTotalCount
+      tags:
+      - Storage API
+      summary: Total stored page count
+      description: Returns the total number of pages currently in Cloud Storage.
+      responses:
+        '200':
+          description: The total stored count.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format - html (default), json, or md (Markdown).
+      schema:
+        type: string
+        enum:
+        - html
+        - json
+        - md
+        default: html
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: 'Crawlbase authentication token passed as the `token` query parameter. Each account has two tokens: a Normal (TCP) token for static content and a JavaScript token for headless-Chrome rendering.'
