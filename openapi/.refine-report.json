@@ -1,0 +1,22 @@
+{
+  "provider": "crawlbase",
+  "sources": [
+    "crawlbase-crawling-api-api-openapi.yml",
+    "crawlbase-leads-api-api-openapi.yml",
+    "crawlbase-scraper-api-api-openapi.yml",
+    "crawlbase-screenshots-api-api-openapi.yml",
+    "crawlbase-storage-api-api-openapi.yml"
+  ],
+  "outputs": [
+    "crawlbase-crawling-api-api-openapi.yml",
+    "crawlbase-leads-api-api-openapi.yml",
+    "crawlbase-scraper-api-api-openapi.yml",
+    "crawlbase-screenshots-api-api-openapi.yml",
+    "crawlbase-storage-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

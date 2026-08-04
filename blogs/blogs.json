@@ -1,0 +1,21 @@
+{
+  "repo": "crawlbase",
+  "feeds": [
+    {
+      "source": "https://crawlbase.com/blog/atom.xml",
+      "feed_url": "https://crawlbase.com/blog/atom.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://crawlbase.com/blog",
+      "feed_url": "https://crawlbase.com/blog/atom.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 21,
+  "fetched": "2026-08-01T15:49:00Z"
+}
