@@ -1,0 +1,235 @@
+{
+  "item": [
+    {
+      "id": "6570402a-5f1b-4b05-b603-27ff06bc9d2f",
+      "name": "Scraper API",
+      "description": {
+        "content": "Ready-made structured-data extractors for supported sites (legacy).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7f6357c7-de0c-469f-bfa3-6270ff797cc7",
+          "name": "Scrape a supported site to structured JSON",
+          "request": {
+            "name": "Scrape a supported site to structured JSON",
+            "description": {
+              "content": "Applies a named `scraper` to the target `url` and returns provider-specific structured JSON (for example, amazon-product-details, google-serp, linkedin-company). Documented by Crawlbase as a legacy endpoint; the Crawling API's `&scraper=` parameter offers the same extractors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scraper"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) Fully URL-encoded target URL, including http:// or https://."
+                },
+                {
+                  "disabled": false,
+                  "key": "scraper",
+                  "value": "<string>",
+                  "description": "(Required) Name of the scraper/extractor to apply (see the Crawlbase scraper catalog)."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+                },
+                {
+                  "disabled": false,
+                  "key": "javascript",
+                  "value": "<boolean>",
+                  "description": "Render the page in Chrome before scraping (requires the JavaScript token)."
+                },
+                {
+                  "disabled": false,
+                  "key": "premium",
+                  "value": "<boolean>",
+                  "description": "Route through the premium residential proxy network."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b38c7d95-4461-4a83-861d-f8beea9be9cc",
+              "name": "Structured JSON for the scraped page. Fields vary per scraper.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scraper"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scraper",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "javascript",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "premium",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 3862,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2d162d2-5570-449a-90a1-6aac756b0ad5",
+              "name": "Missing or invalid token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scraper"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scraper",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "javascript",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "premium",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pc_status\": 5290,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crawlbase.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7ea81b3e-a24f-45a5-947d-17d3779f6f07",
+    "name": "Crawlbase Crawling API Scraper API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).\nGrounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase's public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.\n\nContact Support:\n Name: Crawlbase",
+      "type": "text/plain"
+    }
+  }
+}

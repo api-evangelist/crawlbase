@@ -1,0 +1,660 @@
+{
+  "item": [
+    {
+      "id": "9589cf71-ebf9-46b9-a656-a7b93672195a",
+      "name": "Crawling API",
+      "description": {
+        "content": "Fetch any URL through the rotating proxy network, optionally rendered.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "029bd864-13bf-4b61-8e81-933787c2a8a9",
+          "name": "Crawl a URL",
+          "request": {
+            "name": "Crawl a URL",
+            "description": {
+              "content": "Fetches the target `url` through Crawlbase's proxy network and returns the page. Use the Normal (TCP) token for static HTML/JSON, or the JavaScript token to render the page in headless Chrome before returning it. Crawlbase status is surfaced in the `pc_status` response header; requests that do not return `pc_status: 200` are not charged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) Fully URL-encoded target URL, including http:// or https://."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "html",
+                  "description": "Response format - html (default), json, or md (Markdown)."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "desktop",
+                  "description": "Device profile - desktop (default), tablet, or mobile."
+                },
+                {
+                  "disabled": false,
+                  "key": "user_agent",
+                  "value": "<string>",
+                  "description": "Override the User-Agent header sent to the target."
+                },
+                {
+                  "disabled": false,
+                  "key": "scraper",
+                  "value": "<string>",
+                  "description": "Name of a built-in extractor to apply to the crawled page (returns parsed JSON)."
+                },
+                {
+                  "disabled": false,
+                  "key": "autoparse",
+                  "value": "<boolean>",
+                  "description": "Auto-detect the page type and return parsed JSON."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_wait",
+                  "value": "<integer>",
+                  "description": "Milliseconds to wait after page load before capture (JavaScript token only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ajax_wait",
+                  "value": "<boolean>",
+                  "description": "Wait for AJAX / network idle before capture (JavaScript token only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "css_click_selector",
+                  "value": "<string>",
+                  "description": "CSS selector to click before capture (JavaScript token only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "scroll",
+                  "value": "<boolean>",
+                  "description": "Scroll toward the bottom of the page before capture (JavaScript token only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "scroll_interval",
+                  "value": "<integer>",
+                  "description": "Maximum seconds to scroll (default 10, max 60)."
+                },
+                {
+                  "disabled": false,
+                  "key": "screenshot",
+                  "value": "<boolean>",
+                  "description": "Capture a JPEG screenshot of the rendered page (JavaScript token only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "get_headers",
+                  "value": "<boolean>",
+                  "description": "Return the target's response headers alongside the body."
+                },
+                {
+                  "disabled": false,
+                  "key": "get_cookies",
+                  "value": "<boolean>",
+                  "description": "Return the target's Set-Cookie values."
+                },
+                {
+                  "disabled": false,
+                  "key": "cookies_session",
+                  "value": "<string>",
+                  "description": "Sticky session identifier to reuse cookies across requests."
+                },
+                {
+                  "disabled": false,
+                  "key": "store",
+                  "value": "<boolean>",
+                  "description": "Persist the response in Crawlbase Cloud Storage."
+                },
+                {
+                  "disabled": false,
+                  "key": "async",
+                  "value": "<boolean>",
+                  "description": "Queue the request and return immediately with a request id (rid)."
+                },
+                {
+                  "disabled": false,
+                  "key": "callback",
+                  "value": "<uri>",
+                  "description": "Webhook URL that Crawlbase posts async results to."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "78f3e202-2f06-4135-9ae8-277d7f97e6e9",
+              "name": "The crawled page. Body is raw upstream content (HTML, Markdown, JSON, or image) depending on `format`, `scraper`, and `screenshot`. Crawlbase-specific metadata (pc_status, original_status, rid, url) is returned in response headers, or inline when `format=json`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "html"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "user_agent",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scraper",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "autoparse",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page_wait",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ajax_wait",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "css_click_selector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scroll",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scroll_interval",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "screenshot",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "get_headers",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "get_cookies",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cookies_session",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "callback",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4579.534513325625,\n  \"key_1\": 2928\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae82229f-adde-45f9-957a-155be90bf7d5",
+              "name": "Missing or invalid token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "html"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "user_agent",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scraper",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "autoparse",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page_wait",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ajax_wait",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "css_click_selector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scroll",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scroll_interval",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "screenshot",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "get_headers",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "get_cookies",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cookies_session",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "store",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "async",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "callback",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pc_status\": 5874,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b0943a8-5f97-4cb3-9be3-042b12756f9d",
+          "name": "Crawl a URL (POST)",
+          "request": {
+            "name": "Crawl a URL (POST)",
+            "description": {
+              "content": "Same as the GET crawl operation, but the request payload (for example, POST form data to submit to the target) is sent in the request body. The `token` and `url` remain query parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) Fully URL-encoded target URL, including http:// or https://."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "html",
+                  "description": "Response format - html (default), json, or md (Markdown)."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "desktop",
+                  "description": "Device profile - desktop (default), tablet, or mobile."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "key_0",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "key_1",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "key_2",
+                  "value": "6984"
+                },
+                {
+                  "disabled": false,
+                  "key": "key_3",
+                  "value": "502.22952198132"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cf164ff1-c24b-41e5-bc11-8b98f446273c",
+              "name": "The crawled page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "html"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "key_0",
+                      "value": "4579.534513325625"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "key_1",
+                      "value": "2928"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4579.534513325625,\n  \"key_1\": 2928\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eb169d9-dd81-4d1a-bf54-235d9a7ffb6f",
+              "name": "Missing or invalid token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "html"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "key_0",
+                      "value": "4579.534513325625"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "key_1",
+                      "value": "2928"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pc_status\": 5874,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crawlbase.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a4bf0df6-3446-4cc5-a8a1-b029b8217436",
+    "name": "Crawlbase Crawling API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).\nGrounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase's public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.\n\nContact Support:\n Name: Crawlbase",
+      "type": "text/plain"
+    }
+  }
+}

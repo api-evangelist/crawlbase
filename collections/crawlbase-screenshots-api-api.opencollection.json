@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crawlbase Crawling API Screenshots API API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Screenshots API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Capture a screenshot of a URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/screenshots",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Fully URL-encoded target URL, including http:// or https://."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "viewport (visible area) or fullpage (entire scrollable page)."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Image output format."
+              },
+              {
+                "name": "width",
+                "value": "",
+                "type": "query",
+                "description": "Viewport width in pixels."
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "Viewport height in pixels."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Device profile - desktop (default), tablet, or mobile."
+              },
+              {
+                "name": "store",
+                "value": "",
+                "type": "query",
+                "description": "Persist the capture in Cloud Storage."
+              }
+            ]
+          },
+          "docs": "Renders the target `url` in headless Chrome and returns a screenshot. Requires the JavaScript token. Documented by Crawlbase as a legacy endpoint (closed to new sign-ups on 2024-11-01)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

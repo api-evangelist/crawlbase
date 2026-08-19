@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crawlbase Crawling API API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Crawling API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Crawl a URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Fully URL-encoded target URL, including http:// or https://."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format - html (default), json, or md (Markdown)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Device profile - desktop (default), tablet, or mobile."
+              },
+              {
+                "name": "user_agent",
+                "value": "",
+                "type": "query",
+                "description": "Override the User-Agent header sent to the target."
+              },
+              {
+                "name": "scraper",
+                "value": "",
+                "type": "query",
+                "description": "Name of a built-in extractor to apply to the crawled page (returns parsed JSON)."
+              },
+              {
+                "name": "autoparse",
+                "value": "",
+                "type": "query",
+                "description": "Auto-detect the page type and return parsed JSON."
+              },
+              {
+                "name": "page_wait",
+                "value": "",
+                "type": "query",
+                "description": "Milliseconds to wait after page load before capture (JavaScript token only)."
+              },
+              {
+                "name": "ajax_wait",
+                "value": "",
+                "type": "query",
+                "description": "Wait for AJAX / network idle before capture (JavaScript token only)."
+              },
+              {
+                "name": "css_click_selector",
+                "value": "",
+                "type": "query",
+                "description": "CSS selector to click before capture (JavaScript token only)."
+              },
+              {
+                "name": "scroll",
+                "value": "",
+                "type": "query",
+                "description": "Scroll toward the bottom of the page before capture (JavaScript token only)."
+              },
+              {
+                "name": "scroll_interval",
+                "value": "",
+                "type": "query",
+                "description": "Maximum seconds to scroll (default 10, max 60)."
+              },
+              {
+                "name": "screenshot",
+                "value": "",
+                "type": "query",
+                "description": "Capture a JPEG screenshot of the rendered page (JavaScript token only)."
+              },
+              {
+                "name": "get_headers",
+                "value": "",
+                "type": "query",
+                "description": "Return the target's response headers alongside the body."
+              },
+              {
+                "name": "get_cookies",
+                "value": "",
+                "type": "query",
+                "description": "Return the target's Set-Cookie values."
+              },
+              {
+                "name": "cookies_session",
+                "value": "",
+                "type": "query",
+                "description": "Sticky session identifier to reuse cookies across requests."
+              },
+              {
+                "name": "store",
+                "value": "",
+                "type": "query",
+                "description": "Persist the response in Crawlbase Cloud Storage."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Queue the request and return immediately with a request id (rid)."
+              },
+              {
+                "name": "callback",
+                "value": "",
+                "type": "query",
+                "description": "Webhook URL that Crawlbase posts async results to."
+              }
+            ]
+          },
+          "docs": "Fetches the target `url` through Crawlbase's proxy network and returns the page. Use the Normal (TCP) token for static HTML/JSON, or the JavaScript token to render the page in headless Chrome before returning it. Crawlbase status is surfaced in the `pc_status` response header; requests that do not return `pc_status: 200` are not charged."
+        },
+        {
+          "info": {
+            "name": "Crawl a URL (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.crawlbase.com/",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Fully URL-encoded target URL, including http:// or https://."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format - html (default), json, or md (Markdown)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Device profile - desktop (default), tablet, or mobile."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Same as the GET crawl operation, but the request payload (for example, POST form data to submit to the target) is sent in the request body. The `token` and `url` remain query parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

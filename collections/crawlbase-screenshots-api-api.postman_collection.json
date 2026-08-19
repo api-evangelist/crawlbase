@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "1f3e2cdc-25b6-4fd9-b10c-83b37f6b520d",
+      "name": "Screenshots API",
+      "description": {
+        "content": "Rendered page screenshots in headless Chrome (legacy).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f015436d-f968-42b0-b581-df434cf0fa69",
+          "name": "Capture a screenshot of a URL",
+          "request": {
+            "name": "Capture a screenshot of a URL",
+            "description": {
+              "content": "Renders the target `url` in headless Chrome and returns a screenshot. Requires the JavaScript token. Documented by Crawlbase as a legacy endpoint (closed to new sign-ups on 2024-11-01).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "screenshots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) Fully URL-encoded target URL, including http:// or https://."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "viewport",
+                  "description": "viewport (visible area) or fullpage (entire scrollable page)."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "png",
+                  "description": "Image output format."
+                },
+                {
+                  "disabled": false,
+                  "key": "width",
+                  "value": "1280",
+                  "description": "Viewport width in pixels."
+                },
+                {
+                  "disabled": false,
+                  "key": "height",
+                  "value": "800",
+                  "description": "Viewport height in pixels."
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "desktop",
+                  "description": "Device profile - desktop (default), tablet, or mobile."
+                },
+                {
+                  "disabled": false,
+                  "key": "store",
+                  "value": "<boolean>",
+                  "description": "Persist the capture in Cloud Storage."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2aa5b06-d7ed-4bea-a275-ecbcae1e5275",
+              "name": "The rendered screenshot image.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "screenshots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "viewport"
+                    },
+                    {
+                      "key": "format",
+                      "value": "png"
+                    },
+                    {
+                      "key": "width",
+                      "value": "1280"
+                    },
+                    {
+                      "key": "height",
+                      "value": "800"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "store",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1303d510-cf1a-4da3-8b29-2585214154a4",
+              "name": "Missing or invalid token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "screenshots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "viewport"
+                    },
+                    {
+                      "key": "format",
+                      "value": "png"
+                    },
+                    {
+                      "key": "width",
+                      "value": "1280"
+                    },
+                    {
+                      "key": "height",
+                      "value": "800"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "store",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pc_status\": 1500,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crawlbase.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9db516d6-64b6-4d7c-85bb-9f746a48dae6",
+    "name": "Crawlbase Crawling API Screenshots API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).\nGrounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase's public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.\n\nContact Support:\n Name: Crawlbase",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crawlbase Crawling API Scraper API API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scraper API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scrape a supported site to structured JSON",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/scraper",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Fully URL-encoded target URL, including http:// or https://."
+              },
+              {
+                "name": "scraper",
+                "value": "",
+                "type": "query",
+                "description": "Name of the scraper/extractor to apply (see the Crawlbase scraper catalog)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB)."
+              },
+              {
+                "name": "javascript",
+                "value": "",
+                "type": "query",
+                "description": "Render the page in Chrome before scraping (requires the JavaScript token)."
+              },
+              {
+                "name": "premium",
+                "value": "",
+                "type": "query",
+                "description": "Route through the premium residential proxy network."
+              }
+            ]
+          },
+          "docs": "Applies a named `scraper` to the target `url` and returns provider-specific structured JSON (for example, amazon-product-details, google-serp, linkedin-company). Documented by Crawlbase as a legacy endpoint; the Crawling API's `&scraper=` parameter offers the same extractors."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crawlbase Crawling API Storage API API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Storage API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a stored page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage",
+            "params": [
+              {
+                "name": "rid",
+                "value": "",
+                "type": "query",
+                "description": "The request id of a stored crawl."
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The URL-encoded target URL whose most recent stored version to return."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format - html (default), json, or md (Markdown)."
+              }
+            ]
+          },
+          "docs": "Returns a previously stored crawl by `rid` or by `url`. When queried by `url`, the most recent stored version is returned. Exactly one of `rid` or `url` is required."
+        },
+        {
+          "info": {
+            "name": "Delete a stored page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.crawlbase.com/storage",
+            "params": [
+              {
+                "name": "rid",
+                "value": "",
+                "type": "query",
+                "description": "The request id of the stored crawl to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a single stored crawl identified by its `rid`."
+        },
+        {
+          "info": {
+            "name": "Bulk retrieve stored pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.crawlbase.com/storage/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetches up to 100 stored crawls in a single request by a list of request ids."
+        },
+        {
+          "info": {
+            "name": "Bulk delete stored pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.crawlbase.com/storage/bulk_delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes multiple stored crawls in a single request by a list of request ids."
+        },
+        {
+          "info": {
+            "name": "List stored request ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage/rids",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum request ids to return per page (cap 10000)."
+              },
+              {
+                "name": "scroll",
+                "value": "",
+                "type": "query",
+                "description": "Enable scroll pagination; the response returns a scroll_id to continue."
+              }
+            ]
+          },
+          "docs": "Lists stored request ids with scroll-based pagination."
+        },
+        {
+          "info": {
+            "name": "Total stored page count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.crawlbase.com/storage/total_count"
+          },
+          "docs": "Returns the total number of pages currently in Cloud Storage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

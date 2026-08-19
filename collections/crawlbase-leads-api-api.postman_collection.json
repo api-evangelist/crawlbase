@@ -1,0 +1,193 @@
+{
+  "item": [
+    {
+      "id": "6d72f847-55dd-4ec6-8583-a3e029a9b55e",
+      "name": "Leads API",
+      "description": {
+        "content": "Publicly visible email discovery for a domain (legacy).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "695735a1-81e6-42a5-ae80-4dcc20e64520",
+          "name": "Discover emails for a domain",
+          "request": {
+            "name": "Discover emails for a domain",
+            "description": {
+              "content": "Returns publicly visible email addresses associated with a bare `domain`, with the source URLs where each was found. Billed at one credit per ten emails. Documented by Crawlbase as closed to new sign-ups since 2024-10-01.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "leads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "(Required) Bare domain (no scheme or path), for example slack.com."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum emails to return (default 10)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1820e2e-5c03-49f1-9b78-b16b139da863",
+              "name": "Discovered emails with source URLs and available metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4533,\n  \"key_1\": 7995.749658859671\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5557dfa-5e7a-4d4d-86df-795ab00222ce",
+              "name": "Missing or invalid token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pc_status\": 6911,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.crawlbase.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f4e2a626-154d-461d-aa2d-40b50e03416b",
+    "name": "Crawlbase Crawling API Leads API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform. A single REST host, https://api.crawlbase.com, exposes several products, all authenticated with a `token` query parameter: the Crawling API (fetch any URL through a rotating proxy network, optionally rendered in headless Chrome), the Scraper API (ready-made structured extractors for popular sites), the Cloud Storage API (retrieve/list/delete previously stored crawls), the Screenshots API (rendered page captures), and the Leads API (domain email discovery).\nGrounding note: paths, methods, and the token query-param auth model are confirmed from Crawlbase's public documentation. Request query parameters are modeled from the documented parameter reference. Response bodies are largely raw upstream content (HTML, Markdown, JSON, or images) or, for the Scraper API, provider-specific JSON whose exact fields vary per scraper and are therefore modeled loosely rather than enumerated. Treat response schemas as illustrative.\n\nContact Support:\n Name: Crawlbase",
+      "type": "text/plain"
+    }
+  }
+}
