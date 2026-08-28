@@ -9,6 +9,18 @@ description: Crawlbase (formerly ProxyCrawl) is a web crawling and scraping plat
   exposes the Crawling API, a Scraper API of ready-made site extractors, Cloud
   Storage for crawled pages, a Screenshots API, and a Leads API for domain email
   discovery.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: open
