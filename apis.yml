@@ -2,13 +2,11 @@ aid: crawlbase
 url: https://raw.githubusercontent.com/api-evangelist/crawlbase/refs/heads/main/apis.yml
 name: Crawlbase
 kind: company
-description: Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform
-  that fetches any web page through a large rotating proxy network with optional
-  headless-Chrome JavaScript rendering, returning raw HTML, Markdown, screenshots,
-  or structured JSON. A single token-authenticated REST host (api.crawlbase.com)
-  exposes the Crawling API, a Scraper API of ready-made site extractors, Cloud
-  Storage for crawled pages, a Screenshots API, and a Leads API for domain email
-  discovery.
+description: Crawlbase (formerly ProxyCrawl) is a web crawling and scraping platform that fetches any
+  web page through a large rotating proxy network with optional headless-Chrome JavaScript rendering,
+  returning raw HTML, Markdown, screenshots, or structured JSON. A single token-authenticated REST host
+  (api.crawlbase.com) exposes the Crawling API, a Scraper API of ready-made site extractors, Cloud Storage
+  for crawled pages, a Screenshots API, and a Leads API for domain email discovery.
 deliveryModel:
   model: saas
   open_source: false
@@ -46,11 +44,11 @@ tags:
 - SERP
 - Web Data
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: crawlbase:crawlbase-crawling-api-api
-  name: Crawlbase Crawling API API
+  name: Crawlbase Crawling API
   description: Fetch any URL through the rotating proxy network, optionally rendered.
   humanURL: https://crawlbase.com/docs/crawling-api/
   baseURL: https://api.crawlbase.com
@@ -76,7 +74,7 @@ apis:
   - type: Documentation
     url: https://crawlbase.com/docs/leads-api/
 - aid: crawlbase:crawlbase-leads-api-api
-  name: Crawlbase Leads API API
+  name: Crawlbase Leads API
   description: Publicly visible email discovery for a domain (legacy).
   humanURL: https://crawlbase.com/docs/crawling-api/
   baseURL: https://api.crawlbase.com
@@ -102,7 +100,7 @@ apis:
   - type: Documentation
     url: https://crawlbase.com/docs/leads-api/
 - aid: crawlbase:crawlbase-scraper-api-api
-  name: Crawlbase Scraper API API
+  name: Crawlbase Scraper API
   description: Ready-made structured-data extractors for supported sites (legacy).
   humanURL: https://crawlbase.com/docs/crawling-api/
   baseURL: https://api.crawlbase.com
@@ -128,7 +126,7 @@ apis:
   - type: Documentation
     url: https://crawlbase.com/docs/leads-api/
 - aid: crawlbase:crawlbase-screenshots-api-api
-  name: Crawlbase Screenshots API API
+  name: Crawlbase Screenshots API
   description: Rendered page screenshots in headless Chrome (legacy).
   humanURL: https://crawlbase.com/docs/crawling-api/
   baseURL: https://api.crawlbase.com
@@ -154,7 +152,7 @@ apis:
   - type: Documentation
     url: https://crawlbase.com/docs/leads-api/
 - aid: crawlbase:crawlbase-storage-api-api
-  name: Crawlbase Storage API API
+  name: Crawlbase Storage API
   description: Retrieve, list, and delete previously stored crawls.
   humanURL: https://crawlbase.com/docs/crawling-api/
   baseURL: https://api.crawlbase.com
