@@ -54,21 +54,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    Url:
-      name: url
-      in: query
-      required: true
-      description: Fully URL-encoded target URL, including http:// or https://.
-      schema:
-        type: string
-    Country:
-      name: country
-      in: query
-      required: false
-      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
-      schema:
-        type: string
   schemas:
     Error:
       type: object
@@ -77,6 +62,21 @@ components:
           type: integer
         error:
           type: string
+  parameters:
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
+    Url:
+      name: url
+      in: query
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or invalid token.

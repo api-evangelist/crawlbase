@@ -153,31 +153,19 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    Format:
-      name: format
+    Country:
+      name: country
       in: query
       required: false
-      description: Response format - html (default), json, or md (Markdown).
-      schema:
-        type: string
-        enum:
-        - html
-        - json
-        - md
-        default: html
-    UserAgent:
-      name: user_agent
-      in: query
-      required: false
-      description: Override the User-Agent header sent to the target.
-      schema:
-        type: string
-    Scraper:
-      name: scraper
-      in: query
-      required: false
-      description: Name of a built-in extractor to apply to the crawled page (returns parsed JSON).
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
       schema:
         type: string
     Url:
@@ -199,20 +187,32 @@ components:
         - tablet
         - mobile
         default: desktop
-    Country:
-      name: country
+    UserAgent:
+      name: user_agent
       in: query
       required: false
-      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      description: Override the User-Agent header sent to the target.
       schema:
         type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Scraper:
+      name: scraper
+      in: query
+      required: false
+      description: Name of a built-in extractor to apply to the crawled page (returns parsed JSON).
+      schema:
+        type: string
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format - html (default), json, or md (Markdown).
+      schema:
+        type: string
+        enum:
+        - html
+        - json
+        - md
+        default: html
   schemas:
     Error:
       type: object
