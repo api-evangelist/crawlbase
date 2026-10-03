@@ -80,22 +80,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        pc_status:
-          type: integer
-        error:
-          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    Url:
-      name: url
-      in: query
-      required: true
-      description: Fully URL-encoded target URL, including http:// or https://.
-      schema:
-        type: string
     Device:
       name: device
       in: query
@@ -108,13 +100,21 @@ components:
         - tablet
         - mobile
         default: desktop
-  responses:
-    Unauthorized:
-      description: Missing or invalid token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Url:
+      name: url
+      in: query
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
   securitySchemes:
     tokenAuth:
       type: apiKey

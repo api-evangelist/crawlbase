@@ -182,27 +182,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        pc_status:
-          type: integer
-        error:
-          type: string
-  parameters:
-    Format:
-      name: format
-      in: query
-      required: false
-      description: Response format - html (default), json, or md (Markdown).
-      schema:
-        type: string
-        enum:
-        - html
-        - json
-        - md
-        default: html
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -216,6 +195,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format - html (default), json, or md (Markdown).
+      schema:
+        type: string
+        enum:
+        - html
+        - json
+        - md
+        default: html
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
   securitySchemes:
     tokenAuth:
       type: apiKey
