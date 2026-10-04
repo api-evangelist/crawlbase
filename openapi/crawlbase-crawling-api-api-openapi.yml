@@ -168,25 +168,6 @@ components:
       description: Name of a built-in extractor to apply to the crawled page (returns parsed JSON).
       schema:
         type: string
-    Country:
-      name: country
-      in: query
-      required: false
-      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
-      schema:
-        type: string
-    Device:
-      name: device
-      in: query
-      required: false
-      description: Device profile - desktop (default), tablet, or mobile.
-      schema:
-        type: string
-        enum:
-        - desktop
-        - tablet
-        - mobile
-        default: desktop
     UserAgent:
       name: user_agent
       in: query
@@ -206,6 +187,25 @@ components:
         - json
         - md
         default: html
+    Device:
+      name: device
+      in: query
+      required: false
+      description: Device profile - desktop (default), tablet, or mobile.
+      schema:
+        type: string
+        enum:
+        - desktop
+        - tablet
+        - mobile
+        default: desktop
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or invalid token.

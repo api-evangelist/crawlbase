@@ -87,6 +87,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
   parameters:
     Device:
       name: device
@@ -107,14 +115,6 @@ components:
       description: Fully URL-encoded target URL, including http:// or https://.
       schema:
         type: string
-  schemas:
-    Error:
-      type: object
-      properties:
-        pc_status:
-          type: integer
-        error:
-          type: string
   securitySchemes:
     tokenAuth:
       type: apiKey
