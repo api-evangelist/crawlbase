@@ -1,17 +1,19 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/crawlbase-openapi.yml
+source: openapi/crawlbase-crawling-api-api-openapi.yml, openapi/crawlbase-leads-api-api-openapi.yml,
+  openapi/crawlbase-scraper-api-api-openapi.yml, openapi/crawlbase-screenshots-api-api-openapi.yml,
+  openapi/crawlbase-storage-api-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 11
   by_action_class:
-    connected: 7
-    acting: 4
+    connected: 8
+    acting: 3
   by_consequence:
-    read: 7
-    write: 4
+    read: 8
+    write: 3
   human_in_the_loop_required: 0
 operations:
 - path: /
@@ -40,9 +42,29 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /leads
+  method: get
+  operationId: getLeads
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /scraper
   method: get
   operationId: scrape
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /screenshots
+  method: get
+  operationId: screenshot
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -80,18 +102,12 @@ operations:
   method: post
   operationId: getStoredPagesBulk
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /storage/bulk_delete
   method: post
   operationId: deleteStoredPagesBulk
@@ -121,26 +137,6 @@ operations:
 - path: /storage/total_count
   method: get
   operationId: getStoredTotalCount
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /screenshots
-  method: get
-  operationId: screenshot
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /leads
-  method: get
-  operationId: getLeads
   x-agentic-access:
     action-class: connected
     consequence: read
