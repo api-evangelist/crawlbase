@@ -154,13 +154,32 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    Url:
-      name: url
+    UserAgent:
+      name: user_agent
       in: query
-      required: true
-      description: Fully URL-encoded target URL, including http:// or https://.
+      required: false
+      description: Override the User-Agent header sent to the target.
       schema:
         type: string
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
+    Device:
+      name: device
+      in: query
+      required: false
+      description: Device profile - desktop (default), tablet, or mobile.
+      schema:
+        type: string
+        enum:
+        - desktop
+        - tablet
+        - mobile
+        default: desktop
     Scraper:
       name: scraper
       in: query
@@ -168,11 +187,11 @@ components:
       description: Name of a built-in extractor to apply to the crawled page (returns parsed JSON).
       schema:
         type: string
-    UserAgent:
-      name: user_agent
+    Url:
+      name: url
       in: query
-      required: false
-      description: Override the User-Agent header sent to the target.
+      required: true
+      description: Fully URL-encoded target URL, including http:// or https://.
       schema:
         type: string
     Format:
@@ -187,32 +206,6 @@ components:
         - json
         - md
         default: html
-    Device:
-      name: device
-      in: query
-      required: false
-      description: Device profile - desktop (default), tablet, or mobile.
-      schema:
-        type: string
-        enum:
-        - desktop
-        - tablet
-        - mobile
-        default: desktop
-    Country:
-      name: country
-      in: query
-      required: false
-      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
-      schema:
-        type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -221,6 +214,13 @@ components:
           type: integer
         error:
           type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

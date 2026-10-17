@@ -183,26 +183,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        pc_status:
-          type: integer
-        error:
-          type: string
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     Format:
       name: format
@@ -216,6 +208,14 @@ components:
         - json
         - md
         default: html
+  schemas:
+    Error:
+      type: object
+      properties:
+        pc_status:
+          type: integer
+        error:
+          type: string
   securitySchemes:
     tokenAuth:
       type: apiKey

@@ -55,13 +55,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    Country:
-      name: country
-      in: query
-      required: false
-      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
-      schema:
-        type: string
     Url:
       name: url
       in: query
@@ -69,6 +62,20 @@ components:
       description: Fully URL-encoded target URL, including http:// or https://.
       schema:
         type: string
+    Country:
+      name: country
+      in: query
+      required: false
+      description: Two-letter ISO 3166 country code to geolocate the request (for example US, DE, GB).
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -77,13 +84,6 @@ components:
           type: integer
         error:
           type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey
