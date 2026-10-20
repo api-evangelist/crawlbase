@@ -54,3 +54,55 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: crawlbase-officialskills-sh
+  label: officialskills.sh
+  partner_name: officialskills.sh
+  category: Agent Skills register
+  type: register
+  channel: standard-directory
+  evidence: https://officialskills.sh/crawlbase/skills
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: officialskills.sh (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: crawlbase
+    matched_by: org-profile-domain:crawlbase.com
+    sample_skills:
+    - crawl-html
+    - crawl-markdown
+    - crawl-screenshot
+    - storage-bulk-delete
+    - storage-bulk-get
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: crawlbase-voltagent-awesome-agent-skills-community-list
+  label: VoltAgent awesome-agent-skills (community list)
+  partner_name: VoltAgent awesome-agent-skills (community list)
+  category: Agent Skills register
+  type: register
+  channel: standard-directory
+  evidence: https://github.com/VoltAgent/awesome-agent-skills
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: VoltAgent awesome-agent-skills (community list) (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: crawlbase
+    matched_by: org-profile-domain:crawlbase.com
+    sample_skills:
+    - crawl-html
+    - crawl-markdown
+    - crawl-screenshot
+    - storage-bulk-delete
+    - storage-bulk-get
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null

@@ -51,11 +51,90 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: officialskills.sh
+  partner: null
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Agent Skills register
+  evidence: https://officialskills.sh/crawlbase/skills
+  channel: standard-directory
+  relationship: compatible
+  shape: agent-skills
+  evidence_kind: register-listing
+  degree: listed
+  report_only: true
+  agent_skills_register:
+    repos:
+    - crawlbase/skills
+    repo_verified: false
+    signal_note: the provider's own-org repos the register lists; skill / install counts never read
+  contract_reference:
+    register: officialskills.sh (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: crawlbase
+    matched_by: org-profile-domain:crawlbase.com
+    sample_skills:
+    - crawl-html
+    - crawl-markdown
+    - crawl-screenshot
+    - storage-bulk-delete
+    - storage-bulk-get
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  detected_by: sweep-agent-skills.py
+  first_seen: '2026-10-20'
+- partner_name: VoltAgent awesome-agent-skills (community list)
+  partner: null
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Agent Skills register
+  evidence: https://github.com/VoltAgent/awesome-agent-skills
+  channel: standard-directory
+  relationship: compatible
+  shape: agent-skills
+  evidence_kind: register-listing
+  degree: listed
+  report_only: true
+  agent_skills_register:
+    repos:
+    - crawlbase/crawlbase-mcp
+    - crawlbase/langchain-crawlbase
+    - crawlbase/n8n-nodes-crawlbase
+    - crawlbase/skills
+    repo_verified: false
+    signal_note: the provider's own-org repos the register lists; skill / install counts never read
+  contract_reference:
+    register: VoltAgent awesome-agent-skills (community list) (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: crawlbase
+    matched_by: org-profile-domain:crawlbase.com
+    sample_skills:
+    - crawl-html
+    - crawl-markdown
+    - crawl-screenshot
+    - storage-bulk-delete
+    - storage-bulk-get
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  detected_by: sweep-agent-skills.py
+  first_seen: '2026-10-20'
 method: searched
 checked:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
 - https://zapier.com/api/v4/apps/
+- https://api.github.com
+- https://claude-plugins.dev/sitemap.xml
+- https://github.com/VoltAgent/awesome-agent-skills
+- https://officialskills.sh/sitemap.xml
+- https://skillsmp.com/sitemap.xml
+- https://www.skills.sh/sitemap.xml
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://zapier.com/api/v4/apps/
